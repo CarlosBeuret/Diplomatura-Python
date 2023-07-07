@@ -16,12 +16,12 @@ Asegúrate de tener instalado Python en tu sistema.
 
 1. Ejecuta el archivo `proyecto_biblioteca.py` para iniciar la aplicación. Al ejecutarla se abrirá la interfaz gráfica de usuario.
 2. La aplicación te permite realizar las siguientes acciones:
-- Agregar un libro: Completa el título y la editorial del libro y presiona el botón "Guardar".
-- Borrar un libro: Selecciona un libro de la lista y presiona el botón "Borrar".
-- Realizar un préstamo: Selecciona un libro de la lista, ingresa el nombre de la persona a la que se le presta el libro y presiona el botón "Préstamo". Se ultiliza expresión regular para verificar el nombre ingresado.
-- Realizar una devolución: Selecciona un libro prestado de la lista y presiona el botón "Devolución". La aplicación mostrará si el libro fue devuelto en tiempo o con retraso.
-- Mostrar libros prestados: presiona el boton "Libros Prestados" y se mostrará la lista de libros actualmente prestados.
-- Mostrar todos los libros: presiona el boton "Mostrar Todo" y se mostrara la lista completa de libros en la biblioteca.
+- Agregar un libro (alta): Completa el título y la editorial del libro y presiona el botón "Guardar".
+- Borrar un libro (baja): Selecciona un libro de la lista y presiona el botón "Borrar".
+- Realizar un préstamo (modificación): Selecciona un libro de la lista, ingresa el nombre de la persona a la que se le presta el libro y presiona el botón "Préstamo". Se ultiliza expresión regular para verificar el nombre ingresado.
+- Realizar una devolución (modificación): Selecciona un libro prestado de la lista y presiona el botón "Devolución". La aplicación mostrará si el libro fue devuelto en tiempo o con retraso.
+- Mostrar libros prestados (consulta): presiona el boton "Libros Prestados" y se mostrará la lista de libros actualmente prestados.
+- Mostrar todos los libros (consulta): presiona el boton "Mostrar Todo" y se mostrara la lista completa de libros en la biblioteca.
 3. Los resultados de las acciones se mostrarán en la interfaz de usuario y podrás ver los cambios reflejados en la lista de libros. En la parte inferior se muestran los eventos realizados.
 
 
