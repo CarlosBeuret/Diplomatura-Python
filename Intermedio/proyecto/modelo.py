@@ -118,7 +118,7 @@ def devolucion(tree, lbl_regreso):
                 cursor.execute(sql, ("Sin prestamo", "", "Null", id))
                 con.commit()
                 con.close()
-                mostrar_tabla()
+                mostrar_tabla(tree)
             else:
                 messagebox.showinfo("Correcto", "Muchas gracias por devolver el libro en término.")
                 con = sqlite3.connect(database_path)
