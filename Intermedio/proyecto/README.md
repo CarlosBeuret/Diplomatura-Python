@@ -9,12 +9,12 @@ Asegúrate de tener instalado Python en tu sistema.
 ## Instalación
 
 1. Clona o descarga este repositorio en tu máquina local.
-2. Ejecuta el archivo config.py para crear la database y agregar algunos libros de ejemplo.
+2. Ejecuta el archivo main.py para crear la database y agregar algunos libros de ejemplo.
 
 
 ## Uso
 
-1. Ejecuta el archivo `proyecto_biblioteca.py` para iniciar la aplicación. Al ejecutarla se abrirá la interfaz gráfica de usuario.
+1. Ejecuta el archivo `main.py` para iniciar la aplicación. Al ejecutarla se abrirá la interfaz gráfica de usuario.
 2. La aplicación te permite realizar las siguientes acciones:
 - Agregar un libro (alta): Completa el título y la editorial del libro y presiona el botón "Guardar".
 - Borrar un libro (baja): Selecciona un libro de la lista y presiona el botón "Borrar".

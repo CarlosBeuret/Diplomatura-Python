@@ -5,11 +5,15 @@ from tkinter import StringVar
 from tkinter import Button
 from tkinter import Entry
 
-from controlador import Controlador
+from MVC.controlador import Controlador
 
 
 class Vista:
     def __init__(self, controlador: Controlador):
+        """Constructor de la clase Vista que contiene todo lo relativo a la interfaz de usuario.
+
+        
+        """               
         self.controlador = controlador
 
         self.master = Tk()

@@ -3,17 +3,28 @@ import re
 from datetime import datetime
 
 
-from modelo import Modelo
+from MVC.modelo import Modelo
 
 
 class Controlador:
     def __init__(self, modelo: Modelo) -> None:
+        """Constructor de la clase Controlador.
+
+        :param Modelo modelo: se le pasa un objeto de la clase Modelo
+        """        
         self.modelo = modelo
 
     def crear_tabla(self):
         self.modelo.crear_tabla
 
     def guardar(self, var_titulo, var_editorial, lbl_guardar, tree):
+        """Método que contiene la lógica para guardar libros en la base de datos.
+
+        :param Stringvar var_titulo: contiene el titulo del libro.
+        :param Stringvar var_editorial: contiene el nombre de la editorial. 
+        :param Label lbl_guardar: botón de guardado
+        :param ttk.Treeview tree: treeview
+        """        
         if var_titulo.get() == "" or var_editorial.get() == "":
             messagebox.showinfo(
                 "Complete datos",
@@ -25,7 +36,6 @@ class Controlador:
             var_editorial.set("")
             var_titulo.set("")
             self.oculta_mensaje_guardar(lbl_guardar)
-
             self.mostrar_tabla(tree)
 
     def oculta_mensaje_guardar(self, lbl_guardar):
@@ -33,6 +43,11 @@ class Controlador:
         lbl_guardar.grid(column=1)
 
     def borrar(self, tree, lbl_borrar):
+        """Método que contiene la lógica para borrar libros.
+
+        :param Treeview tree: treeview
+        :param Label lbl_borrar: botón de borrado.
+        """        
         items = tree.focus()
         values = tree.item(items, "values")
         if len(values) == 0:
@@ -41,7 +56,7 @@ class Controlador:
                 "Para hacer una devolución debe seleccionar un libro.",
             )
         else:
-            self.modelo.delete(id = values[0])
+            self.modelo.delete(id=values[0])
             self.oculta_mensaje_borrar(lbl_borrar)
             lbl_borrar.grid(column=1)
             self.mostrar_tabla(tree)
@@ -50,6 +65,12 @@ class Controlador:
         lbl_borrar.grid_forget()
 
     def prestamo(self, tree, var_nombre, lbl_prestamo):
+        """Método que contiene la lógica para dar en préstamo un libro.
+
+        :param Treeview tree: treeview.
+        :param Stringvar var_nombre: contiene el nombre del libro.
+        :param Label lbl_prestamo: botón de préstamo.
+        """        
         items = tree.focus()
         values = tree.item(items, "values")
 
@@ -85,6 +106,11 @@ class Controlador:
         lbl_prestamo.grid_forget()
 
     def devolucion(self, tree, lbl_regreso):
+        """Método que contiene la lógica para la devolución de un libro.
+
+        :param Treeview tree: treeview
+        :param Label lbl_regreso: botón de regreso
+        """        
         items = tree.focus()
         values = tree.item(items, "values")
 
@@ -123,18 +149,32 @@ class Controlador:
         lbl_regreso.grid_forget()
 
     def obtener_datos(self):
+        """Método que retorna listado con todos los libros.
+
+        :return list: listado con todos los libros.
+        """        
         return self.modelo.show_all()
 
     def mostrar_tabla(self, tree):
+        """Método para mostrar todos los libros.
+
+        
+        """        
         datos = self.obtener_datos()
         tree.delete(*tree.get_children())
         for fila in datos:
             tree.insert("", "end", values=fila)
 
     def libros_prestados(self):
+        """Método que retorna todos los libros prestados.
+
+        """        
         return self.modelo.show_prestados()
 
     def mostrar_prestados(self, tree):
+        """Método que muestra todos los libros prestados.
+
+        """        
         datos = self.libros_prestados()
         tree.delete(*tree.get_children())
         for fila in datos:

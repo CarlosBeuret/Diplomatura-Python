@@ -1,7 +1,6 @@
-from vista import Vista
-from modelo import Modelo
-from controlador import Controlador
-
+from MVC.modelo import Modelo
+from MVC.controlador import Controlador
+from MVC.vista import Vista
 
 
 if __name__== "__main__":
