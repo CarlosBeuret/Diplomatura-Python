@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MVC.controlador &#8212; Biblioteca 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=039e1c02" />
+    <script src="../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for MVC.controlador</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">messagebox</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+
+<span class="kn">from</span> <span class="nn">MVC.modelo</span> <span class="kn">import</span> <span class="n">Modelo</span>
+
+
+<div class="viewcode-block" id="Controlador">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador">[docs]</a>
+<span class="k">class</span> <span class="nc">Controlador</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modelo</span><span class="p">:</span> <span class="n">Modelo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor de la clase Controlador.</span>
+
+<span class="sd">        :param Modelo modelo: se le pasa un objeto de la clase Modelo</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelo</span> <span class="o">=</span> <span class="n">modelo</span>
+
+<div class="viewcode-block" id="Controlador.crear_tabla">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.crear_tabla">[docs]</a>
+    <span class="k">def</span> <span class="nf">crear_tabla</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelo</span><span class="o">.</span><span class="n">crear_tabla</span></div>
+
+
+<div class="viewcode-block" id="Controlador.guardar">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.guardar">[docs]</a>
+    <span class="k">def</span> <span class="nf">guardar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_titulo</span><span class="p">,</span> <span class="n">var_editorial</span><span class="p">,</span> <span class="n">lbl_guardar</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Método que contiene la lógica para guardar libros en la base de datos.</span>
+
+<span class="sd">        :param Stringvar var_titulo: contiene el titulo del libro.</span>
+<span class="sd">        :param Stringvar var_editorial: contiene el nombre de la editorial. </span>
+<span class="sd">        :param Label lbl_guardar: botón de guardado</span>
+<span class="sd">        :param ttk.Treeview tree: treeview</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="n">var_titulo</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">var_editorial</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span>
+                <span class="s2">&quot;Complete datos&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Para realizar un ingreso debe completar titulo y editorial&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modelo</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">var_titulo</span><span class="p">,</span> <span class="n">var_editorial</span><span class="p">)</span>
+
+            <span class="n">var_editorial</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">var_titulo</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">oculta_mensaje_guardar</span><span class="p">(</span><span class="n">lbl_guardar</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mostrar_tabla</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Controlador.oculta_mensaje_guardar">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.oculta_mensaje_guardar">[docs]</a>
+    <span class="k">def</span> <span class="nf">oculta_mensaje_guardar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lbl_guardar</span><span class="p">):</span>
+        <span class="n">lbl_guardar</span><span class="o">.</span><span class="n">grid_forget</span><span class="p">()</span>
+        <span class="n">lbl_guardar</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Controlador.borrar">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.borrar">[docs]</a>
+    <span class="k">def</span> <span class="nf">borrar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">lbl_borrar</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Método que contiene la lógica para borrar libros.</span>
+
+<span class="sd">        :param Treeview tree: treeview</span>
+<span class="sd">        :param Label lbl_borrar: botón de borrado.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">items</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">focus</span><span class="p">()</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span>
+                <span class="s2">&quot;Debe seleccionar&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Para hacer una devolución debe seleccionar un libro.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modelo</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">oculta_mensaje_borrar</span><span class="p">(</span><span class="n">lbl_borrar</span><span class="p">)</span>
+            <span class="n">lbl_borrar</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mostrar_tabla</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Controlador.oculta_mensaje_borrar">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.oculta_mensaje_borrar">[docs]</a>
+    <span class="k">def</span> <span class="nf">oculta_mensaje_borrar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lbl_borrar</span><span class="p">):</span>
+        <span class="n">lbl_borrar</span><span class="o">.</span><span class="n">grid_forget</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Controlador.prestamo">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.prestamo">[docs]</a>
+    <span class="k">def</span> <span class="nf">prestamo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">var_nombre</span><span class="p">,</span> <span class="n">lbl_prestamo</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Método que contiene la lógica para dar en préstamo un libro.</span>
+
+<span class="sd">        :param Treeview tree: treeview.</span>
+<span class="sd">        :param Stringvar var_nombre: contiene el nombre del libro.</span>
+<span class="sd">        :param Label lbl_prestamo: botón de préstamo.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">items</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">focus</span><span class="p">()</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">)</span>
+
+        <span class="n">var_fecha</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^[a-zA-Z\s]+$&quot;</span><span class="p">,</span> <span class="n">var_nombre</span><span class="o">.</span><span class="n">get</span><span class="p">()):</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span>
+                <span class="s2">&quot;Nombre inválido&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;El nombre no puede estar vació y debe contener solo letras mayúsculas, minúsculas o espacios.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span>
+                <span class="s2">&quot;Debe seleccionar&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Para hacer una devolución debe seleccionar un libro.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">estado</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">estado</span> <span class="o">==</span> <span class="s2">&quot;Prestado&quot;</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span>
+                    <span class="s2">&quot;Ya se encuentra prestado&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Para realizar un préstamo no debe estar prestado previamente.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modelo</span><span class="o">.</span><span class="n">update_prestamo</span><span class="p">(</span><span class="n">var_nombre</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">var_fecha</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oculta_mensaje_prestamo</span><span class="p">(</span><span class="n">lbl_prestamo</span><span class="p">)</span>
+                <span class="n">lbl_prestamo</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mostrar_tabla</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                <span class="n">var_nombre</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Controlador.oculta_mensaje_prestamo">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.oculta_mensaje_prestamo">[docs]</a>
+    <span class="k">def</span> <span class="nf">oculta_mensaje_prestamo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lbl_prestamo</span><span class="p">):</span>
+        <span class="n">lbl_prestamo</span><span class="o">.</span><span class="n">grid_forget</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Controlador.devolucion">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.devolucion">[docs]</a>
+    <span class="k">def</span> <span class="nf">devolucion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">lbl_regreso</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Método que contiene la lógica para la devolución de un libro.</span>
+
+<span class="sd">        :param Treeview tree: treeview</span>
+<span class="sd">        :param Label lbl_regreso: botón de regreso</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">items</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">focus</span><span class="p">()</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span>
+                <span class="s2">&quot;Debe seleccionar&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Para hacer una devolución debe seleccionar un libro.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">estado</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">fecha</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">estado</span> <span class="o">==</span> <span class="s2">&quot;Sin prestamo&quot;</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Mensaje&quot;</span><span class="p">,</span> <span class="s2">&quot;El libro no ha sido prestado&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fecha</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">fecha</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">fecha_actual</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="n">lapso</span> <span class="o">=</span> <span class="n">fecha_actual</span> <span class="o">-</span> <span class="n">fecha</span>
+                <span class="n">dias</span> <span class="o">=</span> <span class="n">lapso</span><span class="o">.</span><span class="n">days</span>
+                <span class="k">if</span> <span class="n">dias</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">:</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span>
+                        <span class="s2">&quot;Demora&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;El libro tiene una demora de </span><span class="si">{</span><span class="n">dias</span><span class="si">}</span><span class="s2"> días&quot;</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">modelo</span><span class="o">.</span><span class="n">update_devolucion</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">mostrar_tabla</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span>
+                        <span class="s2">&quot;Correcto&quot;</span><span class="p">,</span> <span class="s2">&quot;Muchas gracias por devolver el libro en término.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">modelo</span><span class="o">.</span><span class="n">update_devolucion</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">oculta_mensaje_regreso</span><span class="p">(</span><span class="n">lbl_regreso</span><span class="p">)</span>
+                    <span class="n">lbl_regreso</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">mostrar_tabla</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Controlador.oculta_mensaje_regreso">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.oculta_mensaje_regreso">[docs]</a>
+    <span class="k">def</span> <span class="nf">oculta_mensaje_regreso</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lbl_regreso</span><span class="p">):</span>
+        <span class="n">lbl_regreso</span><span class="o">.</span><span class="n">grid_forget</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Controlador.obtener_datos">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.obtener_datos">[docs]</a>
+    <span class="k">def</span> <span class="nf">obtener_datos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Método que retorna listado con todos los libros.</span>
+
+<span class="sd">        :return list: listado con todos los libros.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelo</span><span class="o">.</span><span class="n">show_all</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Controlador.mostrar_tabla">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.mostrar_tabla">[docs]</a>
+    <span class="k">def</span> <span class="nf">mostrar_tabla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Método para mostrar todos los libros.</span>
+
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">datos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obtener_datos</span><span class="p">()</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="o">*</span><span class="n">tree</span><span class="o">.</span><span class="n">get_children</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">fila</span> <span class="ow">in</span> <span class="n">datos</span><span class="p">:</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">fila</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Controlador.libros_prestados">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.libros_prestados">[docs]</a>
+    <span class="k">def</span> <span class="nf">libros_prestados</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Método que retorna todos los libros prestados.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelo</span><span class="o">.</span><span class="n">show_prestados</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Controlador.mostrar_prestados">
+<a class="viewcode-back" href="../../MVC.html#MVC.controlador.Controlador.mostrar_prestados">[docs]</a>
+    <span class="k">def</span> <span class="nf">mostrar_prestados</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Método que muestra todos los libros prestados.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">datos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">libros_prestados</span><span class="p">()</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="o">*</span><span class="n">tree</span><span class="o">.</span><span class="n">get_children</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">fila</span> <span class="ow">in</span> <span class="n">datos</span><span class="p">:</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">fila</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Biblioteca</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../MVC.html">MVC package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">main module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, CB.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
