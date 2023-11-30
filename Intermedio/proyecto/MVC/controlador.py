@@ -2,7 +2,6 @@ from tkinter import messagebox
 import re
 from datetime import datetime
 
-
 from MVC.modelo import Modelo
 
 

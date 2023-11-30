@@ -1,8 +1,8 @@
 import sqlite3
 from tkinter.messagebox import showerror
-
-
-class Modelo:
+from utilidades.observador import Tema
+from utilidades.decorador import decorador_mensaje
+class Modelo(Tema):
     def __init__(self, database_path):
         self.database_path = database_path
         self.con = sqlite3.connect(self.database_path)
@@ -24,7 +24,7 @@ class Modelo:
             self.con.commit()
         except:
             showerror("ERROR", "La base de datos ya ha sido creada.")
-
+    @decorador_mensaje
     def insert(self, titulo, editorial):
         """Método utilizado para insertar valores en la base de datos.
 
@@ -55,7 +55,8 @@ class Modelo:
         sql = "UPDATE biblioteca SET estado=?, nombre=?, fecha=? WHERE id=?"
         self.cursor.execute(sql, ("Prestado", nombre, fecha, id))
         self.con.commit()
-
+        self.notificar("prestado")
+   
     def update_devolucion(self, id):
         """Método utilizado para actualizar un libro como devuelto.
 
@@ -64,7 +65,8 @@ class Modelo:
         sql = "UPDATE biblioteca SET estado=?, nombre=?, fecha=? WHERE id=?"
         self.cursor.execute(sql, ("Sin préstamo", "", "Null", id))
         self.con.commit()
-
+        self.notificar("devuelto")
+    
     def show_all(self):
         """Método que devuelve todos los libros.
 

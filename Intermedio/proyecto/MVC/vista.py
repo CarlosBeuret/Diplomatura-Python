@@ -6,7 +6,7 @@ from tkinter import Button
 from tkinter import Entry
 
 from MVC.controlador import Controlador
-
+from utilidades.observador import *
 
 class Vista:
     def __init__(self, controlador: Controlador):
@@ -15,7 +15,7 @@ class Vista:
         
         """               
         self.controlador = controlador
-
+        self.el_observador = ConcreteObserver(self.controlador.modelo)
         self.master = Tk()
 
         self.var_titulo = StringVar()
